@@ -65,36 +65,39 @@ const basicFormSchema = z.object({
 
 });
 
-const appliances = {
-  'Air Conditioner (Inverter)': 'Air Conditioner (Inverter)',
-  'Air Conditioner (Non-Inverter)': 'Air Conditioner (Non-Inverter)',
-  'Refrigerator': 'Refrigerator',
-  'Washing Machine': 'Washing Machine',
-  'Water Dispenser': 'Water Dispenser',
-  'Deep Freezer': 'Deep Freezer',
-  'Electric Oven': 'Electric Oven',
-  'Microwave Oven': 'Microwave Oven',
-  'Electric Kettle': 'Electric Kettle',
-  'Television': 'Television',
-  'Desktop Computer': 'Desktop Computer',
-  'Gaming Consoles/Laptops': 'Gaming Consoles/Laptops',
-  'Water heater/Electric Geyser': 'Water heater/Electric Geyser',
-  'Iron': 'Iron',
-  'Electric Stove': 'Electric Stove',
-}
+// const appliances_list =
+//   ['Air Conditioner (Inverter)', 'Air Conditioner (Non-Inverter)', 'Refrigerator', 'Washing Machine', 'Water Dispenser', 'Deep Freezer', 'Electric Oven', 'Microwave Oven', 'Electric Kettle', 'Television', 'Desktop Computer', 'Gaming Consoles/Laptops', 'Water heater/Electric Geyser', 'Iron', 'Electric Stove']
+// {
+//   'Air Conditioner (Inverter)': 'Air Conditioner (Inverter)',
+//   'Air Conditioner (Non-Inverter)': 'Air Conditioner (Non-Inverter)',
+//   'Refrigerator': 'Refrigerator',
+//   'Washing Machine': 'Washing Machine',
+//   'Water Dispenser': 'Water Dispenser',
+//   'Deep Freezer': 'Deep Freezer',
+//   'Electric Oven': 'Electric Oven',
+//   'Microwave Oven': 'Microwave Oven',
+//   'Electric Kettle': 'Electric Kettle',
+//   'Television': 'Television',
+//   'Desktop Computer': 'Desktop Computer',
+//   'Gaming Consoles/Laptops': 'Gaming Consoles/Laptops',
+//   'Water heater/Electric Geyser': 'Water heater/Electric Geyser',
+//   'Iron': 'Iron',
+//   'Electric Stove': 'Electric Stove',
+// }
 
 const arrayFormSchema = z.object({
   rooms: z
     .array(
       z.object({
-        Appliances: z.array(
-          z.object({
-            appliance: z.nativeEnum(appliances),
-            hours: z
-              .enum(["0-2", "2-4", "4-6", "6-8", "8-16", "16-24"])
-              .describe("Daily Usage in Hours"),
-          }),
-        ),
+        appliances:
+          z.array(
+            z.object({
+              appliance: z.enum(['Air Conditioner (Inverter)', 'Air Conditioner (Non-Inverter)', 'Refrigerator', 'Washing Machine', 'Water Dispenser', 'Deep Freezer', 'Electric Oven', 'Microwave Oven', 'Electric Kettle', 'Television', 'Desktop Computer', 'Gaming Consoles/Laptops', 'Water heater/Electric Geyser', 'Iron', 'Electric Stove']),
+              hours: z
+                .enum(["0-2", "2-4", "4-6", "6-8", "8-16", "16-24"])
+                .describe("Daily Usage in Hours"),
+            }),
+          ),
       }),
     )
     .describe("Rooms in your house"),
@@ -218,13 +221,6 @@ function CombinedForm() {
               values={arrayFormValues}
               onValuesChange={setArrayFormValues}
               onSubmit={handleNext}
-              fieldConfig={{
-                rooms: {
-                  hours: {
-                    fieldType: "radio",
-                  },
-                },
-              }}
             >
               <AutoFormSubmit>Submit</AutoFormSubmit>
             </AutoForm>
