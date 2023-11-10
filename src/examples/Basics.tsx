@@ -220,7 +220,7 @@ function CombinedForm() {
               formSchema={arrayFormSchema}
               values={arrayFormValues}
               onValuesChange={setArrayFormValues}
-              onSubmit={handleNext}
+              onSubmit={() => setStep(3)}
             >
               <AutoFormSubmit>Submit</AutoFormSubmit>
             </AutoForm>
