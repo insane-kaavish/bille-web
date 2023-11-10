@@ -12,7 +12,7 @@ import { Button } from "../components/ui/button";
 import Json from "@/components/ui/json";
 
 // read API_URL from environment variables
-const API_URL = import.meta.env.VITE_API_URL as string;
+const API_URL = 'https://bille-api-d952527b2fae.herokuapp.com/'
 
 const basicFormSchema = z.object({
   
@@ -132,6 +132,19 @@ function CombinedForm() {
   const [basicFormValues, setBasicFormValues] = useState({});
   const [arrayFormValues, setArrayFormValues] = useState({});
   const [predictionResult, setPredictionResult] = useState(null);
+  const handleNext = async () => {
+    console.log("Next called")
+    try {
+      const response = await fetch(`${API_URL}/`, {
+        method: "GET",
+      });
+      console.log('response', response)
+    }
+    catch (error) {
+      console.error("There was an error:", error);
+    }
+    setStep(2)
+  }
 
   const handleSubmit = async () => {
     console.log("Basic Form Values:", basicFormValues);
@@ -186,7 +199,7 @@ function CombinedForm() {
               formSchema={basicFormSchema}
               values={basicFormValues}
               onValuesChange={setBasicFormValues}
-              onSubmit={() => setStep(2)}
+              onSubmit={handleNext}
               fieldConfig={{
                 unit: {
                   fieldType: "radio",
