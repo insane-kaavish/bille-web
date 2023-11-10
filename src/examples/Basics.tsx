@@ -12,7 +12,7 @@ import { Button } from "../components/ui/button";
 import Json from "@/components/ui/json";
 
 // read API_URL from environment variables
-const API_URL = 'https://bille-api-d952527b2fae.herokuapp.com/'
+const API_URL = import.meta.env.VITE_API_URL as string;
 
 const basicFormSchema = z.object({
   
@@ -132,6 +132,7 @@ function CombinedForm() {
   const [basicFormValues, setBasicFormValues] = useState({});
   const [arrayFormValues, setArrayFormValues] = useState({});
   const [predictionResult, setPredictionResult] = useState(null);
+  
   const handleNext = async () => {
     console.log("Next called")
     try {
@@ -171,7 +172,7 @@ function CombinedForm() {
     } catch (error) {
       console.error("There was an error:", error);
     }
-  };
+  }
 
   return (
     <div className="mx-auto my-6 max-w-lg">
