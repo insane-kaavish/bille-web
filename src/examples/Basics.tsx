@@ -131,7 +131,7 @@ function CombinedForm() {
   const [step, setStep] = useState(1);
   const [basicFormValues, setBasicFormValues] = useState({});
   const [arrayFormValues, setArrayFormValues] = useState({});
-  const [predictionResult, setPredictionResult] = useState(null);
+  const [predictionResult, setPredictionResult] = useState("");
   
   const handleNext = async () => {
     console.log("Next called")
@@ -145,34 +145,35 @@ function CombinedForm() {
       console.error("There was an error:", error);
     }
     setStep(2)
+    setPredictionResult("10")
   }
 
-  const handleSubmit = async () => {
-    console.log("Basic Form Values:", basicFormValues);
-    console.log("Array Form Values:", arrayFormValues);
-    const combinedFormValues = { ...basicFormValues, ...arrayFormValues };
-    console.log("Combined Form Values:", combinedFormValues);
+  // const handleSubmit = async () => {
+  //   console.log("Basic Form Values:", basicFormValues);
+  //   console.log("Array Form Values:", arrayFormValues);
+  //   const combinedFormValues = { ...basicFormValues, ...arrayFormValues };
+  //   console.log("Combined Form Values:", combinedFormValues);
 
-    try {
-      const response = await fetch(`${API_URL}/predict`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(combinedFormValues),
-      });
+  //   try {
+  //     const response = await fetch(`${API_URL}/predict`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(combinedFormValues),
+  //     });
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
+  //     if (!response.ok) {
+  //       throw new Error("Network response was not ok");
+  //     }
 
-      const data = await response.json();
-      setPredictionResult(data.predictedUnits);
-      setStep(3);
-    } catch (error) {
-      console.error("There was an error:", error);
-    }
-  }
+  //     const data = await response.json();
+  //     setPredictionResult(data.predictedUnits);
+  //     setStep(3);
+  //   } catch (error) {
+  //     console.error("There was an error:", error);
+  //   }
+  // }
 
   return (
     <div className="mx-auto my-6 max-w-lg">
