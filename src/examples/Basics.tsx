@@ -132,8 +132,8 @@ function CombinedForm() {
   const [basicFormValues, setBasicFormValues] = useState({});
   const [arrayFormValues, setArrayFormValues] = useState({});
   const [predictionResult, setPredictionResult] = useState(null);
-  
-  const handleNext = async () => {
+
+  const handleSubmit = async () => {
     console.log("Next called")
     try {
       const response = await fetch(`${API_URL}/`, {
@@ -147,7 +147,7 @@ function CombinedForm() {
     setStep(2)
   }
 
-  const handleSubmit = async () => {
+  const handleNext = async () => {
     console.log("Basic Form Values:", basicFormValues);
     console.log("Array Form Values:", arrayFormValues);
     const combinedFormValues = { ...basicFormValues, ...arrayFormValues };
@@ -200,7 +200,7 @@ function CombinedForm() {
               formSchema={basicFormSchema}
               values={basicFormValues}
               onValuesChange={setBasicFormValues}
-              onSubmit={handleNext}
+              onSubmit={handleSubmit}
               fieldConfig={{
                 unit: {
                   fieldType: "radio",
@@ -216,7 +216,7 @@ function CombinedForm() {
               formSchema={arrayFormSchema}
               values={arrayFormValues}
               onValuesChange={setArrayFormValues}
-              onSubmit={handleSubmit}
+              onSubmit={handleNext}
               fieldConfig={{
                 rooms: {
                   hours: {
