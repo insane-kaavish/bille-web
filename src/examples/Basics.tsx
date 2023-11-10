@@ -12,7 +12,7 @@ import { Button } from "../components/ui/button";
 import Json from "@/components/ui/json";
 
 // read API_URL from environment variables
-const API_URL = import.meta.env.VITE_API_URL
+const API_URL = import.meta.env.VITE_API_URL as string;
 
 const basicFormSchema = z.object({
   
@@ -134,11 +134,13 @@ function CombinedForm() {
   const [predictionResult, setPredictionResult] = useState(null);
 
   const handleSubmit = async () => {
+    console.log("Basic Form Values:", basicFormValues);
+    console.log("Array Form Values:", arrayFormValues);
     const combinedFormValues = { ...basicFormValues, ...arrayFormValues };
     console.log("Combined Form Values:", combinedFormValues);
 
     try {
-      const response = await fetch(API_URL + "/predict", {
+      const response = await fetch(`${API_URL}/predict`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
