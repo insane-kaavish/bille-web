@@ -179,7 +179,7 @@ function CombinedForm() {
                 <p style={{ color: "red" }}>*Rest assured that all the information you provide will remain completely anonymous and will not be disclosed to any third-party organizations. Your privacy is our top priority. </p>
                 </div>
               : step === 2
-                ? <p style={{ color: "red" }}>*Kindly add the information for at least one room to proceed. </p>
+                ? <p style={{ color: "red" }}>*Kindly add the information for all the individual rooms in your house to proceed.</p>
               : ""}
           </CardDescription>
         </CardHeader>
