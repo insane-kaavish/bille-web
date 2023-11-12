@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "../components/ui/card";
 import { Button } from "../components/ui/button";
-import Json from "@/components/ui/json";
+// import Json from "@/components/ui/json";
 
 // read API_URL from environment variables
 const API_URL = import.meta.env.VITE_API_URL
