@@ -97,8 +97,6 @@ const arrayFormSchema = z.object({
         ),
       }),
     )
-    .length(1, {
-      message: "Please add at least one room"})
     .nonempty({ message: "Please add at least one room"})
     .describe("Rooms in your house")
 ,
