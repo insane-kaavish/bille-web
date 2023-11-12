@@ -167,14 +167,20 @@ function CombinedForm() {
       <Card>
         <CardHeader>
           <CardTitle>
-            {step === 3 ? "Result" : step === 1 ? "Basic Information" : "Room Information"}
+          <h1 className="text-3xl font-semibold leading-none tracking-tight">Bill-E</h1>
+            <p className="text-xl text-gray-600 text-muted-foreground" style={{ fontWeight: "normal" }}>Electricity Consumption Prediction</p>
+          <hr className="my-4" />
+            {/* {step === 3 ? "Result" : step === 1 ? "Basic Information" : "Room Information"} */}
           </CardTitle>
           <CardDescription>
             {step === 1
-              ? "At Bill-E, we are committed to developing a groundbreaking mobile application to revolutionize the way Pakistan consumes and manages electricity. Your input is invaluable to us in shaping this transformative solution. By participating in this survey, you are contributing to a more sustainable, cost-effective, and efficient energy future for Pakistan. We're interested in understanding your electricity consumption patterns and needs better, so we can tailor our application to your unique circumstances. Your data will be treated with the utmost privacy and security. Please take a moment to share your insights on your current electricity usage, preferences, and any specific challenges you face. Your participation not only helps us build a user-friendly and effective application but also contributes to responsible energy usage in Pakistan. Let's work together to reduce electricity bills and promote sustainable practices. Thank you for being a part of this innovative journey with Bill-E."
+              ? <div>
+                <p>Bill-E is designed to empower users with the ability to monitor their electricity consumption by entering relevant usage data. </p> 
+                <p style={{ color: "red" }}>*Rest assured that all the information you provide will remain completely anonymous and will not be disclosed to any third-party organizations. Your privacy is our top priority. </p>
+                </div>
               : step === 2
-              ? "Please fill in the following information"
-              : "Here is the result of your prediction"}
+                ? <p style={{ color: "red" }}>*Kindly add the information for at least one room to proceed. </p>
+              : ""}
           </CardDescription>
         </CardHeader>
 
@@ -223,14 +229,14 @@ function CombinedForm() {
             </Button>
           )}
 
-          {step !== 3 && (
+          {/* {step !== 3 && (
             <Json
               data={
                 step === 1 ? basicFormValues : { ...basicFormValues, ...arrayFormValues }
               }
               className="mt-6"
             />
-          )}
+          )} */}
         </CardContent>
       </Card>
     </div>
