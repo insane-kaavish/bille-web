@@ -9,7 +9,23 @@ import {
   CardTitle,
 } from "../components/ui/card";
 import { Button } from "../components/ui/button";
-// import Json from "@/components/ui/json";
+
+// Define the structure of each appliance
+interface Appliance {
+  appliance: keyof typeof appliances; // Assuming 'appliances' is an object with keys being the appliance names
+  hours: "0-2" | "2-4" | "4-6" | "6-8" | "8-16" | "16-24";
+}
+
+// Define the structure of a room
+interface Room {
+  name: string;
+  Appliances: Appliance[];
+}
+
+// Define the structure for the form values that includes rooms
+interface ArrayFormValues {
+  rooms: Room[];
+}
 
 // read API_URL from environment variables
 const API_URL = import.meta.env.VITE_API_URL
@@ -81,12 +97,13 @@ const appliances = {
   'Water heater/Electric Geyser': 'Water heater/Electric Geyser',
   'Iron': 'Iron',
   'Electric Stove': 'Electric Stove',
-}
+};
 
 const arrayFormSchema = z.object({
   rooms: z
     .array(
       z.object({
+        name: z.string(),
         Appliances: z.array(
           z.object({
             appliance: z.nativeEnum(appliances),
@@ -98,8 +115,7 @@ const arrayFormSchema = z.object({
       }),
     )
     .nonempty({ message: "Please add at least one room"})
-    .describe("Rooms in your house")
-,
+    .describe("Rooms in your house"),
     fans: z
     .coerce.number({
       invalid_type_error: "Kindly enter a number.",
@@ -118,22 +134,41 @@ const arrayFormSchema = z.object({
     .describe("How many lights do you have in your house?"),
 })
 
-function PredictionResult({ predictionResult } : { predictionResult: string }) {
+function PredictionResult({ predictionResult }: { predictionResult: string }) {
   return (
     <>
       <CardDescription>
         The predicted units of electricity for the next month are:
       </CardDescription>
       <p>{predictionResult}</p>
-      </>
+    </>
   );
 }
 
 function CombinedForm() {
   const [step, setStep] = useState(1);
   const [basicFormValues, setBasicFormValues] = useState({});
-  const [arrayFormValues, setArrayFormValues] = useState({});
-  const [predictionResult, setPredictionResult] = useState(null);
+  const [arrayFormValues, setArrayFormValues] = useState<ArrayFormValues>({ rooms: [] });
+  const [predictionResult, setPredictionResult] = useState<string | null>(null);
+  const [roomCount, setRoomCount] = useState(0);
+
+  const handleAddRoom = () => {
+    setRoomCount((currentCount) => {
+      const newRoomNumber = currentCount + 1;
+      const newRoomName = `Room ${newRoomNumber}`;
+      const newRoom: Room = {
+        name: newRoomName,
+        Appliances: []
+      };
+
+      setArrayFormValues(currentValues => ({
+        ...currentValues,
+        rooms: [...currentValues.rooms, newRoom]
+      }));
+
+      return newRoomNumber;
+    });
+  };
 
   const handleSubmit = async () => {
     const combinedFormValues = { ...basicFormValues, ...arrayFormValues };
@@ -165,10 +200,9 @@ function CombinedForm() {
       <Card>
         <CardHeader>
           <CardTitle>
-          <h1 className="text-3xl font-semibold leading-none tracking-tight">Bill-E</h1>
+            <h1 className="text-3xl font-semibold leading-none tracking-tight">Bill-E</h1>
             <p className="text-xl text-gray-600 text-muted-foreground" style={{ fontWeight: "normal" }}>Electricity Consumption Prediction</p>
-          <hr className="my-4" />
-            {/* {step === 3 ? "Result" : step === 1 ? "Basic Information" : "Room Information"} */}
+            <hr className="my-4" />
           </CardTitle>
           <CardDescription>
             {step === 1
